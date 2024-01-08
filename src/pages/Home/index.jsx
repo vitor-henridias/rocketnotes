@@ -7,47 +7,48 @@ import { Section } from "../../components/Section";
 import { Brand, Container, Content, Menu, NewNote, Search } from "./styles";
 
 export function Home() {
-    return (
-        <Container>
-            <Brand>
-                <h1>Rocketnotes</h1>
-            </Brand>
+  return (
+    <Container>
+      <Brand>
+        <h1>Rocketnotes</h1>
+      </Brand>
 
-            <Header />
+      <Header />
 
-            <Menu>
-                <li>
-                    <ButtonText title="Todos" isActive />
-                </li>
-                <li>
-                    <ButtonText title="React" />
-                </li>
-                <li>
-                    <ButtonText title="Node" />
-                </li>
-            </Menu>
+      <Menu>
+        <li>
+          <ButtonText title="Todos" isActive />
+        </li>
+        <li>
+          <ButtonText title="React" />
+        </li>
+        <li>
+          <ButtonText title="Node" />
+        </li>
+      </Menu>
 
-            <Search>
-                <Input placeholder="Pesquisar pelo título" />
-            </Search>
+      <Search>
+        <Input placeholder="Pesquisar pelo título" />
+      </Search>
 
-            <Content>
-                <Section title="Minhas notas">
-                    <Note data={{
-                        title: "React",
-                        tags: [
-                            { id: "1", name: "react" },
-                            { id: "2", name: "rocketseat" },
-                        ]
-                    }} />
-                </Section>
-            </Content>
+      <Content>
+        <Section title="Minhas notas">
+          <Note
+            data={{
+              title: "React",
+              tags: [
+                { id: "1", name: "react" },
+                { id: "2", name: "rocketseat" },
+              ],
+            }}
+          />
+        </Section>
+      </Content>
 
-            <NewNote to="/new">
-                <FiPlus />
-                Criar nota
-            </NewNote>
-
-        </Container>
-    );
+      <NewNote to="/new">
+        <FiPlus />
+        Criar nota
+      </NewNote>
+    </Container>
+  );
 }

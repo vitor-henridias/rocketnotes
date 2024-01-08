@@ -5,7 +5,6 @@ import { Section } from "../../components/Section";
 import { Tag } from "../../components/Tag";
 import { Container, Content, Links } from "./styles";
 
-
 export function Details() {
   return (
     <Container>
@@ -15,12 +14,13 @@ export function Details() {
         <Content>
           <ButtonText title="Excluir nota" />
 
-          <h1>
-            Introdução ao React
-          </h1>
+          <h1>Introdução ao React</h1>
 
           <p>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aut sapiente aliquam dolor molestiae mollitia ea voluptates excepturi repellat qui assumenda ipsa omnis alias, error, ab vitae maiores voluptas hic fuga.
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aut
+            sapiente aliquam dolor molestiae mollitia ea voluptates excepturi
+            repellat qui assumenda ipsa omnis alias, error, ab vitae maiores
+            voluptas hic fuga.
           </p>
 
           <Section title="Links úteis">
@@ -42,7 +42,6 @@ export function Details() {
           <Button title="Voltar" />
         </Content>
       </main>
-
     </Container>
   );
 }

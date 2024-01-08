@@ -1,61 +1,95 @@
+import { useState } from "react";
 import { FiArrowLeft, FiCamera, FiLock, FiMail, FiUser } from "react-icons/fi";
 import { Link } from "react-router-dom";
+import avatarPlaceholder from "../../assets/avatar_placeholder.svg";
 import { Button } from "../../components/Button";
 import { Input } from "../../components/Input";
+import { useAuth } from "../../hooks/auth";
+import { api } from "../../services/api";
 import { Avatar, Container, Form } from "./styles";
 
 export function Profile() {
-    return (
-        <Container>
-            <header>
-                <Link to="/">
-                    <FiArrowLeft />
-                </Link>
-            </header>
+  const { user, updateProfile } = useAuth();
+  const [name, setName] = useState(user.name);
+  const [email, setEmail] = useState(user.email);
+  const [passwordOld, setPasswordOld] = useState();
+  const [passwordNew, setPasswordNew] = useState();
 
-            <Form>
+  const avatarUrl = user.avatar
+    ? `${api.defaults.baseURL}/files/${user.avatar}`
+    : avatarPlaceholder;
+  const [avatar, setAvatar] = useState(avatarUrl);
+  const [avatarFile, setAvatarFile] = useState(null);
 
-                <Avatar>
-                    <img
-                        src="https://github.com/vitor-henridias.png"
-                        alt="Foto do usuário"
-                    />
-                    <label htmlFor="avatar">
-                        <FiCamera />
+  async function handleUpdate() {
+    const user = {
+      name,
+      email,
+      password: passwordNew,
+      old_password: passwordOld,
+    };
 
-                        <input
-                            id="avatar"
-                            type="file"
-                        />
-                    </label>
-                </Avatar>
+    await updateProfile({ user, avatarFile });
+  }
 
-                <Input
-                    placeholder="Nome"
-                    type="text"
-                    icon={FiUser}
-                />
+  function handleChangeAvatar(event) {
+    const file = event.target.files[0];
+    setAvatarFile(file);
 
-                <Input
-                    placeholder="E-mail"
-                    type="text"
-                    icon={FiMail}
-                />
+    const imagePreview = URL.createObjectURL(file);
+    setAvatar(imagePreview);
+  }
 
-                <Input
-                    placeholder="Senha atual"
-                    type="password"
-                    icon={FiLock}
-                />
+  return (
+    <Container>
+      <header>
+        <Link to="/">
+          <FiArrowLeft />
+        </Link>
+      </header>
 
-                <Input
-                    placeholder="Nova senha"
-                    type="password"
-                    icon={FiLock}
-                />
+      <Form>
+        <Avatar>
+          <img src={avatar} alt="Foto do usuário" />
+          <label htmlFor="avatar">
+            <FiCamera />
 
-                <Button title="Salvar" />
-            </Form>
-        </Container>
-    );
+            <input id="avatar" type="file" onChange={handleChangeAvatar} />
+          </label>
+        </Avatar>
+
+        <Input
+          placeholder="Nome"
+          type="text"
+          icon={FiUser}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+
+        <Input
+          placeholder="E-mail"
+          type="text"
+          icon={FiMail}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+
+        <Input
+          placeholder="Senha atual"
+          type="password"
+          icon={FiLock}
+          onChange={(e) => setPasswordOld(e.target.value)}
+        />
+
+        <Input
+          placeholder="Nova senha"
+          type="password"
+          icon={FiLock}
+          onChange={(e) => setPasswordNew(e.target.value)}
+        />
+
+        <Button title="Salvar" onClick={handleUpdate} />
+      </Form>
+    </Container>
+  );
 }
